@@ -41,4 +41,4 @@ Considering the possibility of offering this service to external clients in the 
 
 ## Submission
 
-Please submit your solution via GitHub.
+Please provide us with the link to your solution on the GitHub repository.
