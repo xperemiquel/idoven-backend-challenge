@@ -29,7 +29,7 @@ The information to be returned by the endpoint should indicate the number of tim
 
 ## Technical Specifications
 
-In undertaking this assignment, you're afforded the autonomy to select your preferred programming language, technologies, frameworks, documentation techniques, and testing strategy. We highly value solutions that prioritize readability, maintainability, and the judicious application of design patterns and architectural principles. While you have flexibility, keep in mind our primary tech stack revolves around Python and FastAPI.
+In undertaking this assignment, you're afforded the autonomy to select your preferred programming language, technologies, frameworks, documentation techniques, and testing strategy. We highly value solutions that prioritize readability, maintainability, and the thoughtful application of design patterns and architectural principles. While you have flexibility, keep in mind our primary tech stack revolves around Python and FastAPI."
 
 ### Scalability
 
