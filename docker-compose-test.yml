@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  test-api:
+    environment:
+      PYTHONUNBUFFERED: 1
+      DATABASE_URI: "postgresql://test_user:test_password@test-db/test_db"
+    build:
+      context: app/
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    depends_on:
+      test-db:
+        condition: service_healthy
+
+  test-db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: test_user
+      POSTGRES_PASSWORD: test_password
+      POSTGRES_DB: test_db
+    ports:
+      - "5432:5432"  # Optional: expose PostgreSQL port for direct access
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U test_user -d test_db" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
