@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  api:
+    environment:
+      PYTHONUNBUFFERED: 1
+      DATABASE_URI: "postgresql://ecganalyzer_db_user:ecganalyzer_db_password@db/ecganalyzer"
+    build:
+      context: app/
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy # Ensure the API service waits for the PostgreSQL service to be ready
+    volumes:
+      - ./app/migrations/versions:/usr/src/app/migrations/versions
+    restart: always
+    command: sh -c "alembic upgrade head && uvicorn main:app --host 0.0.0.0 --port 8000"
+
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: ecganalyzer
+      POSTGRES_USER: ecganalyzer_db_user
+      POSTGRES_PASSWORD: ecganalyzer_db_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Persist database data
+    ports:
+      - "5432:5432"  # Optional: expose PostgreSQL port for direct access
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ecganalyzer_db_user -d ecganalyzer"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
